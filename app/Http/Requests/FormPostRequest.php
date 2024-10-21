@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class FormPostRequest extends FormRequest
 {
@@ -40,6 +42,15 @@ class FormPostRequest extends FormRequest
             'slug.unique' => 'Le slug a déjà été pris.',
             'content.required' => 'Le champ contenu est obligatoire.',
         ];
+    }
+    public function failedValidation(Validator|\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'data' => null,
+            'status' => 'Erreur de validation',
+            'message' => 'erreur lors de l\'insertion des données requises',
+            'validation' => $validator->errors()
+        ], 422 ));
     }
 
 }

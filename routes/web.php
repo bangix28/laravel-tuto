@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\IndexController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\Web\IndexController;
+use App\Http\Controllers\Web\PostController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -36,5 +36,5 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', [PostController::class, 'getPostsUser'])->name('0');
+    Route::get('/dashboard', [PostController::class, 'getPostsUser'])->name('dashboard');
 });
